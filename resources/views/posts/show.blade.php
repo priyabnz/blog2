@@ -1,4 +1,5 @@
 @extends('main')
+
 @section('title','|create a  show posts ')
 @section('content')
 
@@ -34,3 +35,4 @@
 			
 	</div>
    @endsection
+

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+
 use DB;
+
 use Session;
 
 class PostController extends Controller
@@ -37,26 +39,28 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-       
-        // validate the form
-            $post=new Post;
-        // DB::transaction(function () use ($request) {
 
-            $this->validate($request, array(
-                    'title'=>'required|max:255',
-                    'body'=>'required'
-                ));
-            //store in database
+        // validate the data 
+        $this->validate($request, array(
+            'title'=>'required|max:255',
+            'body'=>'required'
 
-            $post->title=$request->title;
-            $post->body=$request->body;
-            $post->save();
-            $id = $post->id;
-            
-            Session::flash('success','the blog was post successfully');
-            return redirect()->route('posts.show',$id);
-        // });
-        // dd($post);
+            ));
+
+        // store in db
+        $post=new Post;
+        $post ->title=$request->title;
+        $post->body=$request->body;
+
+        $post->save();
+        Session::flash('success','The blog post was successfully saved!');
+
+
+
+        //redirect to another page
+        return redirect()->route('posts.show',$post->id);
+
+
     }
 
     /**
@@ -67,9 +71,11 @@ class PostController extends Controller
      */
     public function show($id)
     {
+
         $post=Post::find($id);
 
         return view('posts.show')->withPost($post);
+
     }
 
     /**

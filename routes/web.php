@@ -14,6 +14,10 @@
 
 
 
+Route::group(['middleware'=>['web']],function(){
+	
+Route::get('contact','PagesController@getContact') ;
+
 
 
 
@@ -32,4 +36,5 @@ Route::group(['middleware'=>['web']],function(){
 });
 
 	
+
 
